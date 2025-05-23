@@ -186,34 +186,44 @@ const AdminDashboard = () => {
 
       const last12Months = Array.from({ length: 12 }, (_, i) => {
         const date = new Date();
-        date.setMonth(date.getMonth() - i);
+        date.setMonth(date.getMonth() - (11 - i));
         return date;
-      }).reverse();
+      });
 
       const monthlyData = last12Months.map(date => {
         const monthStart = new Date(date.getFullYear(), date.getMonth(), 1);
         const monthEnd = new Date(date.getFullYear(), date.getMonth() + 1, 0);
         
+        const monthProducts = productsData?.filter(p => {
+          const d = new Date(p.pr_ca);
+          return d >= monthStart && d <= monthEnd;
+        }).length || 0;
+
+        const monthUsers = accountsData?.filter(u => {
+          const d = new Date(u.u_ca);
+          return d <= monthEnd;
+        }).length || 0;
+
+        const monthArtisans = artisansData?.filter(a => {
+          const d = new Date(a.ar_ca);
+          return d <= monthEnd;
+        }).length || 0;
+
+        const monthOrders = ordersData?.filter(o => {
+          const d = new Date(o.or_ca);
+          return d >= monthStart && d <= monthEnd;
+        }).length || 0;
+
         return {
           name: date.toLocaleString('default', { month: 'short' }),
-          Products: productsData?.filter(p => {
-            const d = new Date(p.pr_ca);
-            return d >= monthStart && d <= monthEnd;
-          }).length || 0,
-          Users: accountsData?.filter(u => {
-            const d = new Date(u.u_ca);
-            return d >= monthStart && d <= monthEnd;
-          }).length || 0,
-          Artisans: artisansData?.filter(a => {
-            const d = new Date(a.ar_ca);
-            return d >= monthStart && d <= monthEnd;
-          }).length || 0,
-          Orders: ordersData?.filter(o => {
-            const d = new Date(o.or_ca);
-            return d >= monthStart && d <= monthEnd;
-          }).length || 0
+          Products: monthProducts,
+          Users: monthUsers,
+          Artisans: monthArtisans,
+          Orders: monthOrders
         };
       });
+
+      console.log('Monthly trend data:', monthlyData);
 
       setAnalytics({
         weeklyPosts,
