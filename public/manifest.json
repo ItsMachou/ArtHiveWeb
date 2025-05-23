@@ -1,0 +1,23 @@
+{
+  "short_name": "ArtHive",
+  "name": "ArtHive - Marketplace for Artisans",
+  "description": "A platform for artisans to showcase and sell their works.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff8c00",
+  "icons": [
+    {
+      "src": "/assets/honeycomb.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/honeycomb.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "scope": "/",
+  "orientation": "portrait"
+}
